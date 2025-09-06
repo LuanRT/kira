@@ -203,6 +203,10 @@ export function useYoutubePlayer() {
 
     const videoEl = document.createElement('video');
     videoEl.autoplay = true;
+
+    // Let's make sure this thing scales to the host container.
+    videoEl.style.width = '100%';
+    videoEl.style.height = '100%';
     shakaContainer.appendChild(videoEl);
 
     const loadingOverlay = document.createElement('div');
