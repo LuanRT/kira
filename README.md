@@ -1,6 +1,6 @@
 # Kira
 
-Initially, this project was created to showcase how [Shaka Player][shaka] can be adapted to play videos streamed via YouTube’s SABR protocol. It now serves as a general example for the [YouTube.js](youtubeijs) and [googlevideo](googlevideo) libraries.
+Initially, this project was created to showcase how [Shaka Player][shaka] can be adapted to play videos streamed via YouTube’s SABR protocol. It now serves as a general example for the [YouTube.js][youtubeijs] and [googlevideo][googlevideo] libraries.
 
 ## Screenshots
 
