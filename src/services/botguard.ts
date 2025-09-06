@@ -1,4 +1,4 @@
-import { fetchFunction } from '../utils/helpers';
+import { fetchFunction } from '@/utils/helpers';
 import type { DescrambledChallenge, WebPoSignalOutput } from 'bgutils-js';
 import { BG, buildURL, GOOG_API_KEY } from 'bgutils-js';
 

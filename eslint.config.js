@@ -18,7 +18,7 @@ export default [
     },
     rules: {
       "max-len": ["error", {
-        code: 200,
+        code: 300,
         ignoreComments: true,
         ignoreTrailingComments: true,
         ignoreStrings: true,
