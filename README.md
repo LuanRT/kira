@@ -77,7 +77,7 @@ Distributed under the [MIT](./LICENSE) License.
 [grayjay]: https://grayjay.app/
 [googlevideo]: https://www.github.com/LuanRT/googlevideo
 [youtubeijs]: https://github.com/LuanRT/youtube.js
-[sabrstreamingadapter]: src/core/SabrStreamingAdapter.ts
+[sabrstreamingadapter]: https://github.com/LuanRT/googlevideo/blob/main/src/core/SabrStreamingAdapter.ts
 [sabrplayeradapter]: https://github.com/LuanRT/googlevideo/blob/main/src/types/sabrStreamingAdapterTypes.ts#L81-L93
 [sabrumpprocessor]: https://github.com/LuanRT/googlevideo/blob/main/src/core/SabrUmpProcessor.ts
 [compositebuffer]: https://github.com/LuanRT/googlevideo/blob/main/src/core/CompositeBuffer.ts
