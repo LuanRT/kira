@@ -50,12 +50,11 @@ This project's implementation of the `SabrPlayerAdapter` interface for Shaka Pla
 ### How it works
 The core of the integration is the [`SabrStreamingAdapter`][sabrstreamingadapter], which is initialized with our custom [`ShakaPlayerAdapter`][shakaplayeradapter] class.
 
-Instead of a standard manifest URL, Shaka Player is loaded with a dynamically generated DASH manifest for VOD content or a standard HLS/DASH manifest for live and post-live streams. The [`ShakaPlayerAdapter`][shakaplayeradapter] registers a custom networking scheme to intercept all segment requests.
+Shaka Player is loaded with a dynamically generated DASH manifest for VOD content or a standard HLS/DASH manifest for live and post-live streams. The [`ShakaPlayerAdapter`][shakaplayeradapter] registers a custom networking scheme to intercept all segment requests.
 
-When Shaka Player requests a media segment, the request is modified and a proper payload is created. The response for these requests has a `content-type` of `application/vnd.yt-ump`; if that content type is present, the response is streamed through a [`SabrUmpProcessor`][sabrumpprocessor].
+When the player requests a media segment, it is modified and a proper payload is created. The response for these requests has a `content-type` of `application/vnd.yt-ump`; if that content type is present, it is streamed through a [`SabrUmpProcessor`][sabrumpprocessor].
 
-The processor extracts the specific media data Shaka requested, along with metadata needed to maintain the streaming session, and then aborts the request to save bandwidth.
-
+The processor extracts the specific media data the player requested, along with metadata needed to maintain the streaming session, and then aborts the request to save bandwidth.
 
 ## Acknowledgments
 Special thanks to [@absidue](https://github.com/absidue) for helping debug Shaka Player issues and investigating different implementation approaches.
