@@ -19,7 +19,7 @@
     "shaka-player": "^4.16.0",
     "vue": "^3.3.4",
     "vue-router": "^4.5.0",
-    "youtubei.js": "^15.0.1"
+    "youtubei.js": "^15.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
