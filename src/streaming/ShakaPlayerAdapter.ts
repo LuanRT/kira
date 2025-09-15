@@ -252,7 +252,7 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
           // If we have a result, check its integrity before attempting anything.
           if (result) checkResultIntegrity(result);
           if (contentLength) {
-            const numBytesRemaining = result ? 0 : contentLength - loaded;
+            const numBytesRemaining = result ? 0 : parseInt(contentLength) - loaded;
             try {
               progressUpdated(currentTime - lastTime, chunkSize, numBytesRemaining);
             } catch { /** no-op */

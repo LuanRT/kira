@@ -349,7 +349,7 @@ async function fetchVideoInfo() {
             title: metadata.title.toHTML() ?? '',
             titleText: metadata.title.toString(),
             thumbnail: contentImage.image[0].url,
-            authorAvatar: metadata.image?.avatar?.image[0].url,
+            authorAvatar: metadata.image?.as(YTNodes.DecoratedAvatarView)?.avatar?.image[0].url,
             metadata: metadata.metadata?.metadata_rows.map(row => {
               return row.metadata_parts?.map(item => item.text?.toString()).join(metadata.metadata?.delimiter) || '';
             }) || [],
