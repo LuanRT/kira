@@ -56,6 +56,12 @@ When the player requests a media segment, it is modified and a proper payload is
 
 The processor extracts the specific media data the player requested, along with metadata needed to maintain the streaming session, and then aborts the request to save bandwidth.
 
+
+### Minimal Example
+For those who want a barebones example of how to integrate SABR with Shaka Player, a minimal project is available. It strips away the UI and advanced features of Kira to focus solely on the player integration logic.
+
+You can find it here: **[sabr-shaka-example](https://github.com/LuanRT/googlevideo/tree/main/examples/sabr-shaka-example)**
+
 ## Acknowledgments
 Special thanks to [@absidue](https://github.com/absidue) for helping debug Shaka Player issues and investigating different implementation approaches.
 
