@@ -254,7 +254,7 @@ export function useYoutubePlayer() {
     player.addEventListener('buffering', (event: Event) => {
       playerState.value = (player.isBuffering() || (event as any).buffering) ? 'buffering' : 'ready';
     });
-    
+
     await player.attach(videoEl);
     const ui = new shaka.ui.Overlay(player, shakaContainer, videoEl);
 
@@ -532,11 +532,10 @@ export function useYoutubePlayer() {
     }
 
     if (videoInfo.streaming_data && !isPostLiveDVR && !isLive) {
+      sabrAdapter.setStreamingURL(innertube.session.player!.decipher(videoInfo.streaming_data?.server_abr_streaming_url));
       sabrAdapter.setServerAbrFormats(videoInfo.streaming_data.adaptive_formats.map(buildSabrFormat));
+      sabrAdapter.setUstreamerConfig(videoInfo.player_config?.media_common_config.media_ustreamer_request_config?.video_playback_ustreamer_config);
     }
-
-    sabrAdapter.setStreamingURL(innertube.session.player!.decipher(videoInfo.streaming_data?.server_abr_streaming_url));
-    sabrAdapter.setUstreamerConfig(videoInfo.player_config?.media_common_config.media_ustreamer_request_config?.video_playback_ustreamer_config);
 
     let manifestUri: string | undefined;
     if (videoInfo.streaming_data) {

@@ -35,6 +35,9 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
   private cacheManager?: CacheManager;
   private abortController?: AbortController;
 
+  private requestFilter?: (type: shaka.net.NetworkingEngine.RequestType, request: shaka.extern.Request, context?: shaka.extern.RequestContext) => Promise<void>;
+  private responseFilter?: (type: shaka.net.NetworkingEngine.RequestType, response: shaka.extern.Response, context?: shaka.extern.RequestContext) => Promise<void>;
+
   public initialize(
     player: shaka.Player,
     requestMetadataManager: RequestMetadataManager,
@@ -396,7 +399,7 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
     if (!networkingEngine)
       return;
 
-    networkingEngine.registerRequestFilter(async (type, request, context) => {
+    this.requestFilter = async (type, request, context) => {
       if (type !== shaka.net.NetworkingEngine.RequestType.SEGMENT || !isGoogleVideoURL(request.uris[0])) return;
 
       const modifiedRequest = await interceptor({
@@ -416,7 +419,9 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
         request.headers = modifiedRequest.headers || request.headers;
         request.body = modifiedRequest.body || request.body;
       }
-    });
+    };
+
+    networkingEngine.registerRequestFilter(this.requestFilter);
   }
 
   public registerResponseInterceptor(interceptor: ResponseFilter): void {
@@ -424,7 +429,7 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
     const networkingEngine = this.player.getNetworkingEngine();
     if (!networkingEngine) return;
 
-    networkingEngine.registerResponseFilter(async (type, response, context) => {
+    this.responseFilter = async (type, response, context) => {
       if (type !== shaka.net.NetworkingEngine.RequestType.SEGMENT || !isGoogleVideoURL(response.uri)) return;
 
       const modifiedResponse = await interceptor({
@@ -453,7 +458,9 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
         response.data = modifiedResponse.data ?? response.data;
         Object.assign(response.headers, modifiedResponse.headers);
       }
-    });
+    };
+
+    networkingEngine.registerResponseFilter(this.responseFilter);
   }
 
   public createShakaResponse(args: ShakaResponseArgs): shaka.extern.Response {
@@ -475,9 +482,16 @@ export class ShakaPlayerAdapter implements SabrPlayerAdapter {
     }
 
     if (this.player) {
-      const networkingEngine = shaka.net.NetworkingEngine;
-      networkingEngine.unregisterScheme('http');
-      networkingEngine.unregisterScheme('https');
+      const networkingEngine = this.player.getNetworkingEngine();
+     
+      if (networkingEngine && this.requestFilter && this.responseFilter) {
+        networkingEngine.unregisterRequestFilter(this.requestFilter);
+        networkingEngine.unregisterResponseFilter(this.responseFilter);
+      }
+
+      shaka.net.NetworkingEngine.unregisterScheme('http');
+      shaka.net.NetworkingEngine.unregisterScheme('https');
+
       this.player = null;
     }
   }
